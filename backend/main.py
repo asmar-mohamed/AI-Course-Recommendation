@@ -1,7 +1,11 @@
 from fastapi import FastAPI
+from database import engine
+import models
 
-app = FastAPI()
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="AI Course Recommendation System")
 
 @app.get("/")
-def home():
-    return {"message": "FastAPI is working!"}
+def root():
+    return {"message": "FastAPI + MySQL Project Running Successfully!"}
