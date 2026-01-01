@@ -18,8 +18,9 @@ def update(db: Session, user_id: int, data):
     user = get_by_id(db, user_id)
     if not user:
         return None
-    for key, value in data.dict().items():
-        setattr(user, key, value)
+    for key, value in data.dict(exclude_unset=True).items():
+        if value is not None:
+            setattr(user, key, value)
     db.commit()
     db.refresh(user)
     return user
