@@ -71,3 +71,37 @@ export default defineConfig([
   },
 ])
 ```
+
+---
+
+## Tailwind CSS ✅
+
+This project now includes **Tailwind CSS** with a minimal example UI. Files added:
+
+- `tailwind.config.cjs`
+- `postcss.config.cjs`
+- `src/index.css` (includes Tailwind directives)
+- `src/main.tsx` and `src/App.tsx` (basic example)
+
+How to run:
+
+```bash
+cd frontend
+npm install
+# Copy .env.example to .env and set VITE_API_BASE_URL (e.g. http://localhost:8000/api)
+npm run dev
+```
+
+Open the app at the URL shown in the terminal and verify Tailwind is active (the centered card and indigo button on the home screen are Tailwind styles).
+
+---
+
+## Frontend structure & notes
+- Axios instance: `src/api/axios.ts` (reads `VITE_API_BASE_URL`)
+- Auth service: `src/services/authService.ts` (login/register/me)
+- Redux store: `src/store` with `authSlice` and `recSlice`
+- Protected routes via `src/components/ProtectedRoute.tsx`
+- Login and Recommendations pages are implemented as examples
+
+Security note: JWT is stored in `localStorage` for simplicity. For higher security in production, prefer httpOnly cookies or secure storage and refresh tokens.
+

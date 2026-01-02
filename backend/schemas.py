@@ -8,12 +8,43 @@ class UserCreate(BaseModel):
     password: str
     role: str
 
+class UserUpdate(BaseModel):
+    name: str | None = None
+    email: str | None = None
+    password: str | None = None
+    role: str | None = None
+
 class UserResponse(UserCreate):
     id: int
     created_at: datetime
 
     class Config:
         from_attributes = True
+
+# ---------------- AUTH ----------------
+class LoginPayload(BaseModel):
+    email: str
+    password: str
+
+class RegisterPayload(BaseModel):
+    name: str
+    email: str
+    password: str
+
+class UserOut(BaseModel):
+    id: int
+    name: str
+    email: str
+    role: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserOut
 
 
 # ---------------- SKILL ----------------
@@ -49,6 +80,9 @@ class RecommendationResponse(BaseModel):
     course_id: int
     score: float
     created_at: datetime
+    course_name: str
+    course_url: str | None = None
+    matched_skills: list[SkillResponse] = []
 
     class Config:
         from_attributes = True
@@ -59,6 +93,7 @@ class CourseCreate(BaseModel):
     title: str
     description: str
     category: str
+    course_url: str | None = None
 
 class CourseResponse(CourseCreate):
     id: int
@@ -104,6 +139,35 @@ class TestResponse(TestCreate):
 
     class Config:
         from_attributes = True
+
+class TestSubmission(BaseModel):
+    user_id: int
+    answers: list[dict] # list of {"question_id": int, "choice_id": int}
+
+class TestResult(BaseModel):
+    score: float
+    total_points: int
+    passed: bool
+    skill_id: int
+
+class ChoiceNoCorrect(BaseModel):
+    id: int
+    text: str
+
+    class Config:
+        from_attributes = True
+
+class QuestionWithChoices(BaseModel):
+    id: int
+    text: str
+    points: int
+    choices: list[ChoiceNoCorrect]
+
+    class Config:
+        from_attributes = True
+
+class TestWithQuestionsResponse(TestResponse):
+    questions: list[QuestionWithChoices]
 
 
 # ---------------- QUESTION ----------------

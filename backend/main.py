@@ -20,7 +20,24 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="AI Course Recommendation System")
 
+# Enable CORS so the frontend dev server can call this API
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(user.router, prefix="/users", tags=["Users"])
+app.include_router(__import__('routers.auth', fromlist=['auth']).router, prefix="/auth", tags=["Auth"])
 app.include_router(skill.router, prefix="/skills", tags=["Skills"])
 app.include_router(user_skill.router, prefix="/user-skills", tags=["User Skills"])
 app.include_router(course.router, prefix="/courses", tags=["Courses"])

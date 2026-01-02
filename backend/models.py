@@ -34,6 +34,7 @@ class Course(Base):
     title = Column(String(255))
     description = Column(Text)
     category = Column(String(255))
+    course_url = Column(String(500), nullable=True)
     skills = relationship("CourseSkill", back_populates="course")
     enrollments = relationship("Enrollment", back_populates="course")
     recommendations = relationship("Recommendation", back_populates="course")
@@ -59,6 +60,11 @@ class UserSkill(Base):
     updated_at = Column(DateTime, default=datetime.utcnow)
     user = relationship("User", back_populates="skills")
     skill = relationship("Skill", back_populates="users")
+    
+    from sqlalchemy import UniqueConstraint
+    __table_args__ = (
+        UniqueConstraint('user_id', 'skill_id', name='uq_user_skill'),
+    )
 
 # ---------------- Enrollment ----------------
 class Enrollment(Base):
