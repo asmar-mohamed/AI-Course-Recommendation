@@ -88,6 +88,24 @@ export default function Profile() {
         }
     }
 
+    const handleDeleteSkill = async (userSkillId: number) => {
+        if (!user) return
+        if (!confirm('Are you sure you want to remove this skill? This will also update your course recommendations.')) return
+        try {
+            await userSkillService.deleteUserSkill(userSkillId)
+            const us = await userSkillService.getUserSkills(user.id)
+            setUserSkills(us)
+            setMsg('Skill removed successfully.')
+        } catch (err) {
+            setMsg('Failed to remove skill.')
+        }
+    }
+
+    const handleRetestSkill = (skillId: number) => {
+        setMsg(`Redirecting to retest...`)
+        setTimeout(() => navigate(`/test/${skillId}`), 1000)
+    }
+
     if (loading || !user) return <Loading />
 
     return (
@@ -110,7 +128,7 @@ export default function Profile() {
                             <div className="w-24 h-24 rounded-[2rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner">
                                 <Icon icon="solar:user-bold-duotone" width={56} />
                             </div>
-                            <h2 className="text-2xl font-black">{name}</h2>
+                            <h2 className="text-2xl font-black dark:text-slate-100">{name}</h2>
                             <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1">{user.role || 'Student'}</p>
                         </div>
 
@@ -118,7 +136,7 @@ export default function Profile() {
                             <div className="space-y-2">
                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
                                 <Input
-                                    className="rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-12 px-4 font-bold focus:ring-primary/20"
+                                    className="rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-12 px-4 font-bold focus:ring-primary/20 text-slate-900 dark:text-slate-100"
                                     value={name}
                                     onChange={e => setName(e.target.value)}
                                     placeholder="Enter your name"
@@ -144,7 +162,7 @@ export default function Profile() {
                 <div className="lg:col-span-2 space-y-8">
                     <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-2xl font-black flex items-center gap-3">
+                            <h3 className="text-2xl font-black flex items-center gap-3 dark:text-slate-100">
                                 <Icon icon="solar:star-bold-duotone" className="text-warning" width={32} />
                                 Mastered Skills
                             </h3>
@@ -161,18 +179,36 @@ export default function Profile() {
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {userSkills.map(us => (
-                                    <div key={us.id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl flex items-center justify-between group hover:border-primary/30 transition-all">
+                                    <div key={us.id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] flex items-center justify-between group hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-lightprimary/30 flex items-center justify-center text-primary">
+                                            <div className="w-12 h-12 rounded-2xl bg-lightprimary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                                                 <Icon icon="solar:medal-star-bold-duotone" width={24} />
                                             </div>
                                             <div>
-                                                <div className="font-bold text-slate-800 dark:text-slate-100">{us.skill?.name}</div>
-                                                <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">{us.level}</div>
+                                                <div className="font-bold text-slate-800 dark:text-slate-100 text-lg">{us.skill?.name}</div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{us.level}</span>
+                                                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                                                    <span className="text-xs font-black text-primary">{Math.round(us.score * 100)}%</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="text-right">
-                                            <div className="text-lg font-black text-primary">{Math.round(us.score * 100)}%</div>
+
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => handleRetestSkill(us.skill_id)}
+                                                className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-success/10 hover:text-success transition-all"
+                                                title="Retest"
+                                            >
+                                                <Icon icon="solar:refresh-bold-duotone" width={20} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteSkill(us.id)}
+                                                className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-danger/10 hover:text-danger transition-all"
+                                                title="Delete Skill"
+                                            >
+                                                <Icon icon="solar:trash-bin-trash-bold-duotone" width={20} />
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
@@ -180,7 +216,7 @@ export default function Profile() {
                         )}
 
                         <div className="mt-12 pt-12 border-t border-slate-100 dark:border-slate-800">
-                            <h4 className="text-xl font-black mb-6 flex items-center gap-3">
+                            <h4 className="text-xl font-black mb-6 flex items-center gap-3 dark:text-slate-100">
                                 <Icon icon="solar:add-circle-bold-duotone" className="text-success" width={28} />
                                 Add New Expertise
                             </h4>
@@ -188,11 +224,11 @@ export default function Profile() {
                                 <div className="flex-1 min-w-[200px] space-y-2">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Select Skill</label>
                                     <select
-                                        className="w-full rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-12 px-4 font-bold outline-none focus:ring-2 ring-primary/20 appearance-none"
+                                        className="w-full rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 h-12 px-4 font-bold outline-none focus:ring-2 ring-primary/20 appearance-none text-slate-900 dark:text-slate-100"
                                         value={newSkillId}
                                         onChange={e => setNewSkillId(Number(e.target.value))}
                                     >
-                                        {allSkills.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                                        {allSkills.map(s => <option key={s.id} value={s.id} className="dark:bg-slate-900 dark:text-slate-100">{s.name}</option>)}
                                     </select>
                                 </div>
                                 <Button type="submit" className="h-12 px-12 rounded-2xl font-black bg-success hover:bg-success/90">
