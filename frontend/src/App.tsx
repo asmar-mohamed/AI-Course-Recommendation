@@ -18,7 +18,10 @@ export default function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(authMe() as any)
+    const token = localStorage.getItem('token')
+    if (token) {
+      dispatch(authMe() as any)
+    }
   }, [dispatch])
 
   return (
