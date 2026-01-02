@@ -41,10 +41,15 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error.response && error.response.status === 401) {
-      // Remove auth and redirect to login
+      // Remove auth
       localStorage.removeItem('token')
       localStorage.removeItem('user')
-      window.location.href = '/login'
+      
+      // Redirect to login ONLY if not already on an auth page
+      const publicPaths = ['/login', '/register']
+      if (!publicPaths.includes(window.location.pathname)) {
+        window.location.href = '/login'
+      }
     }
 
     return Promise.reject(error)

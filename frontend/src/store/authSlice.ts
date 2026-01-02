@@ -98,6 +98,12 @@ const slice = createSlice({
     builder.addCase(authMe.fulfilled, (state, action: any) => {
       state.user = action.payload
     })
+    builder.addCase(authMe.rejected, (state) => {
+      state.user = null
+      state.token = null
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    })
   },
 })
 
