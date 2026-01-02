@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import type { RootState } from '@/store'
 import * as enrollmentService from '@/services/enrollmentService'
 import * as userSkillService from '@/services/userSkillService'
@@ -10,13 +10,15 @@ import { Icon } from '@iconify/react'
 import { Button } from '@/components/ui/button'
 
 export default function Dashboard() {
+  const navigate = useNavigate()
   const { user } = useSelector((s: RootState) => s.auth)
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
   const [skills, setSkills] = useState<UserSkill[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  const fetchDashboardData = () => {
     if (user?.id) {
+      setLoading(true)
       Promise.all([
         enrollmentService.getUserEnrollments(user.id),
         userSkillService.getUserSkills(user.id)
@@ -25,7 +27,24 @@ export default function Dashboard() {
         setSkills(sk)
       }).finally(() => setLoading(false))
     }
+  }
+
+  useEffect(() => {
+    fetchDashboardData()
   }, [user])
+
+  const handleDeleteEnrollment = async (e: React.MouseEvent, id: number) => {
+    e.stopPropagation()
+    if (!confirm('Are you sure you want to unenroll from this course?')) return
+
+    try {
+      await enrollmentService.deleteEnrollment(id)
+      setEnrollments(prev => prev.filter(enr => enr.id !== id))
+    } catch (err) {
+      console.error('Failed to delete enrollment', err)
+      alert('Failed to unenroll.')
+    }
+  }
 
   if (loading) return <Loading />
 
@@ -81,13 +100,26 @@ export default function Dashboard() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {enrollments.map((enr: Enrollment) => (
-                <div key={enr.id} className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl hover:border-primary/50 transition-all hover:shadow-md cursor-pointer">
+                <div
+                  key={enr.id}
+                  onClick={() => navigate(`/courses/${enr.course_id}`)}
+                  className="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl hover:border-primary/50 transition-all hover:shadow-md cursor-pointer"
+                >
+                  <button
+                    onClick={(e) => handleDeleteEnrollment(e, enr.id)}
+                    className="absolute top-4 right-4 p-2 text-slate-300 hover:text-error hover:bg-lighterror/20 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                    title="Unenroll"
+                  >
+                    <Icon icon="solar:trash-bin-trash-bold-duotone" width={20} />
+                  </button>
                   <div className="flex flex-col h-full justify-between gap-4">
-                    <div>
+                    <div className="pr-8">
                       <div className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">
                         {enr.course?.title || `Course #${enr.course_id}`}
                       </div>
-                      <p className="text-sm text-slate-500 mt-1 line-clamp-1">{enr.course?.description || 'No description available'}</p>
+                      <p className="text-sm text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                        {enr.course?.description || 'No description available'}
+                      </p>
                     </div>
                     <div className="flex items-center justify-between mt-auto">
                       <span className={`rounded-xl px-3 py-1 text-xs font-bold uppercase tracking-wider ${enr.status === 'completed' ? 'bg-green-500/10 text-green-600' : 'bg-primary/10 text-primary'}`}>

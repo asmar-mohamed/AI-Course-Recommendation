@@ -207,6 +207,7 @@ class EnrollmentResponse(EnrollmentCreate):
     id: int
     status: str
     enrolled_at: datetime
+    course: CourseResponse | None = None
 
     class Config:
         from_attributes = True

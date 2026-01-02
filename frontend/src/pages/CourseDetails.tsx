@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCourseById } from '@/store/courseSlice'
@@ -6,11 +6,18 @@ import type { RootState, AppDispatch } from '@/store'
 import { Icon } from '@iconify/react'
 import { Button } from '@/components/ui/button'
 import Loading from '@/components/Loading'
+import * as enrollmentService from '@/services/enrollmentService'
 
 export default function CourseDetails() {
   const { id } = useParams<{ id: string }>()
   const dispatch = useDispatch<AppDispatch>()
-  const { currentCourse, loading, error } = useSelector((state: RootState) => state.courses)
+  const { user } = useSelector((state: RootState) => state.auth)
+  const { currentCourse, loading: courseLoading, error } = useSelector((state: RootState) => state.courses)
+
+  const [enrolled, setEnrolled] = useState(false)
+  const [enrollLoading, setEnrollLoading] = useState(false)
+  const [checkingEnrollment, setCheckingEnrollment] = useState(true)
+  const [msg, setMsg] = useState('')
 
   useEffect(() => {
     if (id) {
@@ -18,7 +25,34 @@ export default function CourseDetails() {
     }
   }, [dispatch, id])
 
-  if (loading) return <Loading />
+  useEffect(() => {
+    if (user && id) {
+      enrollmentService.getUserEnrollments(user.id)
+        .then(enrollments => {
+          const isEnrolled = enrollments.some(e => e.course_id === Number(id))
+          setEnrolled(isEnrolled)
+        })
+        .finally(() => setCheckingEnrollment(false))
+    } else if (!user) {
+      setCheckingEnrollment(false)
+    }
+  }, [user, id])
+
+  const handleEnroll = async () => {
+    if (!user || !id) return
+    setEnrollLoading(true)
+    try {
+      await enrollmentService.enroll(user.id, Number(id))
+      setEnrolled(true)
+      setMsg('Successfully enrolled in the course!')
+    } catch (err: any) {
+      setMsg(err.response?.data?.detail || 'Failed to enroll.')
+    } finally {
+      setEnrollLoading(false)
+    }
+  }
+
+  if (courseLoading || checkingEnrollment) return <Loading />
   if (error) return (
     <div className="flex flex-col items-center justify-center p-12 bg-lighterror/20 rounded-[2rem] border border-lighterror">
       <Icon icon="solar:danger-bold-duotone" width={64} className="text-error mb-4" />
@@ -41,8 +75,17 @@ export default function CourseDetails() {
           Back to Courses
         </Link>
       </Button>
-
+{msg && (
+          <div className="mx-8 mt-8 flex items-center gap-3 p-4 bg-lightprimary text-primary rounded-2xl border border-primary/20 animate-in fade-in slide-in-from-top-4">
+            <Icon icon="solar:info-circle-bold-duotone" width={24} />
+            <span className="font-bold text-sm">{msg}</span>
+            <button onClick={() => setMsg('')} className="ml-auto opacity-50 hover:opacity-100">
+              <Icon icon="solar:close-circle-linear" width={20} />
+            </button>
+          </div>
+        )}
       <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+        
         <div className="relative h-64 bg-lightprimary">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"></div>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -78,8 +121,20 @@ export default function CourseDetails() {
               )}
             </div>
             <div className="flex-shrink-0">
-              <Button className="rounded-2xl px-8 py-7 h-auto text-lg font-bold shadow-lg shadow-primary/30">
-                Enroll in Course
+              <Button
+                onClick={handleEnroll}
+                disabled={enrolled || enrollLoading || !user}
+                className={`rounded-2xl px-8 py-7 h-auto text-lg font-bold shadow-lg transition-all ${enrolled
+                    ? 'bg-success hover:bg-success text-white shadow-success/20 cursor-default'
+                    : 'shadow-primary/30'
+                  }`}
+              >
+                {enrollLoading ? (
+                  <Icon icon="svg-spinners:180-ring" className="mr-2" />
+                ) : enrolled ? (
+                  <Icon icon="solar:check-read-bold-duotone" width={24} className="mr-2" />
+                ) : null}
+                {enrolled ? 'Enrolled' : 'Enroll in Course'}
               </Button>
             </div>
           </div>

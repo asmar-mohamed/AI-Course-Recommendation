@@ -1,11 +1,11 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 import models
 
 def get_all(db: Session):
-    return db.query(models.Enrollment).all()
+    return db.query(models.Enrollment).options(joinedload(models.Enrollment.course)).all()
 
 def get_by_id(db: Session, enrollment_id: int):
-    return db.query(models.Enrollment).filter(models.Enrollment.id == enrollment_id).first()
+    return db.query(models.Enrollment).options(joinedload(models.Enrollment.course)).filter(models.Enrollment.id == enrollment_id).first()
 
 def enroll(db: Session, user_id: int, course_id: int):
     enrollment = models.Enrollment(
@@ -19,7 +19,7 @@ def enroll(db: Session, user_id: int, course_id: int):
     return enrollment
 
 def get_by_user(db: Session, user_id: int):
-    return db.query(models.Enrollment).filter(
+    return db.query(models.Enrollment).options(joinedload(models.Enrollment.course)).filter(
         models.Enrollment.user_id == user_id
     ).all()
 
