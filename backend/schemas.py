@@ -68,6 +68,7 @@ class UserSkillCreate(BaseModel):
 
 class UserSkillResponse(UserSkillCreate):
     id: int
+    skill: SkillResponse | None = None
 
     class Config:
         from_attributes = True

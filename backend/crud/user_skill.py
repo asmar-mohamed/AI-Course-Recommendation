@@ -1,15 +1,15 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 import models
 import services.recommendation_service as rec_service
 
 def get_all(db: Session):
-    return db.query(models.UserSkill).all()
+    return db.query(models.UserSkill).options(joinedload(models.UserSkill.skill)).all()
 
 def get_by_id(db: Session, us_id: int):
-    return db.query(models.UserSkill).filter(models.UserSkill.id == us_id).first()
+    return db.query(models.UserSkill).options(joinedload(models.UserSkill.skill)).filter(models.UserSkill.id == us_id).first()
 
 def get_by_user(db: Session, user_id: int):
-    return db.query(models.UserSkill).filter(
+    return db.query(models.UserSkill).options(joinedload(models.UserSkill.skill)).filter(
         models.UserSkill.user_id == user_id
     ).all()
 
