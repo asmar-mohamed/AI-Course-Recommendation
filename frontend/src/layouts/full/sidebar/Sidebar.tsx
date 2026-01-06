@@ -1,4 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/store'
 import { useTheme } from 'next-themes'
 import SidebarContent from './Sidebaritems'
 import SimpleBar from 'simplebar-react'
@@ -86,6 +88,7 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
     const location = useLocation()
     const pathname = location.pathname
     const { theme } = useTheme()
+    const user = useSelector((state: RootState) => state.auth.user)
 
     // Only allow "light" or "dark" for AMSidebar
     const sidebarMode = theme === 'light' || theme === 'dark' ? theme : undefined
@@ -115,18 +118,25 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
             {/* Sidebar items */}
             <SimpleBar className='h-[calc(100vh-10vh)]'>
                 <div className='px-6'>
-                    {SidebarContent.map((section, index) => (
-                        <div key={index}>
-                            {renderSidebarItems(
-                                [
-                                    ...(section.heading ? [{ heading: section.heading }] : []),
-                                    ...(section.children || []),
-                                ],
-                                pathname,
-                                onClose
-                            )}
-                        </div>
-                    ))}
+                    {SidebarContent
+                        .filter(section => {
+                            if (section.heading === 'Admin') {
+                                return user?.role === 'admin'
+                            }
+                            return true
+                        })
+                        .map((section, index) => (
+                            <div key={index}>
+                                {renderSidebarItems(
+                                    [
+                                        ...(section.heading ? [{ heading: section.heading }] : []),
+                                        ...(section.children || []),
+                                    ],
+                                    pathname,
+                                    onClose
+                                )}
+                            </div>
+                        ))}
                 </div>
             </SimpleBar>
         </AMSidebar>

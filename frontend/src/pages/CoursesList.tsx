@@ -5,7 +5,7 @@ import type { RootState, AppDispatch } from '@/store'
 import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import Loading from '@/components/Loading'
-import type { Course } from '@/types'
+import type { Course } from '@/types/types'
 
 export default function CoursesList() {
   const dispatch = useDispatch<AppDispatch>()

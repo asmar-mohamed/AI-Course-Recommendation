@@ -18,7 +18,7 @@ def create(db: Session, skill_id: int, title: str, duration: int):
     db.refresh(test)
     return test
 
-def update(db: Session, test_id: int, title: str = None, duration: int = None):
+def update(db: Session, test_id: int, title: str = None, duration: int = None, skill_id: int = None):
     t = get_by_id(db, test_id)
     if not t:
         return None
@@ -26,6 +26,8 @@ def update(db: Session, test_id: int, title: str = None, duration: int = None):
         t.title = title
     if duration is not None:
         t.duration = duration
+    if skill_id is not None:
+        t.skill_id = skill_id
     db.commit()
     db.refresh(t)
     return t

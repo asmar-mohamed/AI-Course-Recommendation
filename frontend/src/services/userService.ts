@@ -1,5 +1,5 @@
 import axios from '@/api/axios'
-import type { User } from '@/types'
+import type { User } from '@/types/types'
 
 export async function fetchUser() {
   const { data } = await axios.get<User>('/auth/me')

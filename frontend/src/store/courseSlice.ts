@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { CourseState } from '../types/course';
-import courseService from '../services/courseService';
+import type { Course } from '../types/types';
+
+interface CourseState {
+  list: Course[];
+  currentCourse: Course | null;
+  loading: boolean;
+  error: string | null;
+}
+import * as courseService from '../services/courseService';
 
 const initialState: CourseState = {
   list: [],
@@ -14,7 +21,7 @@ export const fetchCourses = createAsyncThunk(
   'courses/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const data = await courseService.getCourses();
+      const data = await courseService.getAll();
       return data;
     } catch (error: any) {
       const message =

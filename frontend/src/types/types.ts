@@ -9,6 +9,7 @@ export interface User {
 export interface Skill {
   id: number
   name: string
+  description: string
   weight?: number
 }
 
@@ -18,6 +19,7 @@ export interface Course {
   name?: string
   description?: string
   course_url?: string
+  category?: string
   skills?: Array<{ skill: Skill; weight: number }>
 }
 

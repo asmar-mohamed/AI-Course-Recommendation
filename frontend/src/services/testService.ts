@@ -1,5 +1,5 @@
 import axios from '@/api/axios'
-import type { Test } from '@/types'
+import type { Test } from '@/types/types'
 
 export interface TestSubmission {
   user_id: number
@@ -20,6 +20,26 @@ export interface TestWithQuestions extends Test {
     points: number
     choices: Array<{ id: number; text: string }>
   }>
+}
+
+export async function getAll() {
+  const { data } = await axios.get<Test[]>('/tests/')
+  return data
+}
+
+export async function create(test: Partial<Test>) {
+  const { data } = await axios.post<Test>('/tests/', test)
+  return data
+}
+
+export async function update(id: number, test: Partial<Test>) {
+  const { data } = await axios.put<Test>(`/tests/${id}`, test)
+  return data
+}
+
+export async function remove(id: number) {
+  const { data } = await axios.delete<Test>(`/tests/${id}`)
+  return data
 }
 
 export async function getTestBySkill(skillId: number) {

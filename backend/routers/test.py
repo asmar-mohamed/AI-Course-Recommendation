@@ -3,13 +3,13 @@ from sqlalchemy.orm import Session
 from database import get_db
 import crud.test as crud
 from schemas import TestCreate, TestResponse, TestWithQuestionsResponse, TestSubmission, TestResult
-from routers.auth import get_current_user
+from routers.auth import get_current_user, get_admin_user
 import models
 
 router = APIRouter(tags=["Tests"])
 
 @router.post("/", response_model=TestResponse)
-def create(data: TestCreate, db: Session = Depends(get_db)):
+def create(data: TestCreate, db: Session = Depends(get_db), admin: models.User = Depends(get_admin_user)):
     return crud.create(db, data.skill_id, data.title, data.duration)
 
 @router.get("/", response_model=list[TestResponse])
@@ -21,11 +21,11 @@ def get_by_id(test_id: int, db: Session = Depends(get_db)):
     return crud.get_by_id(db, test_id)
 
 @router.put("/{test_id}", response_model=TestResponse)
-def update(test_id: int, data: TestCreate, db: Session = Depends(get_db)):
-    return crud.update(db, test_id, data.title, data.duration)
+def update(test_id: int, data: TestCreate, db: Session = Depends(get_db), admin: models.User = Depends(get_admin_user)):
+    return crud.update(db, test_id, data.title, data.duration, data.skill_id)
 
 @router.delete("/{test_id}", response_model=TestResponse)
-def delete(test_id: int, db: Session = Depends(get_db)):
+def delete(test_id: int, db: Session = Depends(get_db), admin: models.User = Depends(get_admin_user)):
     return crud.delete(db, test_id)
 
 @router.get("/test-by-skill/{skill_id}", response_model=TestResponse)
