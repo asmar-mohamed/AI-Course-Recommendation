@@ -40,7 +40,7 @@ export default function Register() {
             className="h-16 mx-auto mb-8"
           />
           <h1 className="text-3xl font-bold text-dark dark:text-white mb-2">Create Account</h1>
-          <p className="text-muted">Join our community of lifelong learners</p>
+          <p className="text-slate-600 dark:text-slate-300">Join our community of lifelong learners</p>
         </div>
 
         {/* Register Card */}

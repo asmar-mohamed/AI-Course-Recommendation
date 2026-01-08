@@ -39,7 +39,7 @@ export default function Login() {
             className="h-16 mx-auto mb-8"
           />
           <h1 className="text-3xl font-bold text-dark dark:text-white mb-2">Welcome Back</h1>
-          <p className="text-muted">Sign in to your account</p>
+          <p className="text-slate-600 dark:text-slate-300">Sign in to your account</p>
         </div>
 
         {/* Login Card */}
@@ -92,7 +92,7 @@ export default function Login() {
 
           {/* Register Link */}
           <div className="mt-8 text-center border-t border-border pt-6">
-            <p className="text-sm text-muted">
+            <p className="text-sm dark:text-slate-300">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary font-semibold hover:underline">
                 Register here
