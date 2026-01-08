@@ -29,81 +29,75 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4">
-      <div className="w-full max-w-[440px]">
-        <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-12 shadow-2xl border border-slate-100 dark:border-slate-800 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-12">
+          <img 
+            src="/reco.png" 
+            alt="RECO Logo" 
+            className="h-16 mx-auto mb-8"
+          />
+          <h1 className="text-3xl font-bold text-dark dark:text-white mb-2">Welcome Back</h1>
+          <p className="text-muted">Sign in to your account</p>
+        </div>
 
-          <div className="relative space-y-8">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-lightprimary rounded-[1rem] flex items-center justify-center text-primary mx-auto mb-6 shadow-inner">
-                <Icon icon="solar:lock-password-bold-duotone" width={48} />
-              </div>
-              <h1 className="text-4xl font-black tracking-tight mb-2">Welcome <span className="text-primary">Back</span></h1>
-              <p className="text-slate-400 font-bold text-sm uppercase tracking-widest leading-relaxed">Enter your credentials to access your dashboard</p>
+        {/* Login Card */}
+        <div className="bg-white dark:bg-slate-900 rounded-lg p-8 shadow-md border border-border">
+          <ErrorMessage message={auth.error} />
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-dark dark:text-white">Email Address</label>
+              <Input
+                type="email"
+                className="w-full rounded-lg border-border bg-background dark:bg-slate-800 h-12"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
 
-            <ErrorMessage message={auth.error} />
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Email Address</label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                    <Icon icon="solar:letter-bold-duotone" width={20} />
-                  </div>
-                  <Input
-                    className="pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 font-bold focus:ring-primary/20"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">Secure Password</label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-                    <Icon icon="solar:key-minimalistic-bold-duotone" width={20} />
-                  </div>
-                  <Input
-                    type="password"
-                    className="pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 font-bold focus:ring-primary/20"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <Button
-                disabled={auth.loading}
-                type="submit"
-                className="w-full rounded-2xl h-14 font-black text-lg shadow-xl shadow-primary/30 transition-all hover:translate-y-[-2px] active:translate-y-[0px]"
-              >
-                {auth.loading ? (
-                  <div className="flex items-center gap-2">
-                    <Icon icon="line-md:loading-twotone-loop" width={24} />
-                    <span>Signing in...</span>
-                  </div>
-                ) : (
-                  <>
-                    Sign In
-                    <Icon icon="solar:arrow-right-linear" className="ml-2" strokeWidth={2.5} />
-                  </>
-                )}
-              </Button>
-            </form>
-
-            <div className="pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
-              <p className="text-slate-500 font-medium">
-                Don't have an account?{' '}
-                <Link to="/register" className="text-primary font-black hover:underline underline-offset-4">
-                  Register now
-                </Link>
-              </p>
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-dark dark:text-white">Password</label>
+              <Input
+                type="password"
+                className="w-full rounded-lg border-border bg-background dark:bg-slate-800 h-12"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
+
+            {/* Sign In Button */}
+            <Button
+              disabled={auth.loading}
+              type="submit"
+              className="w-full rounded-lg h-12 font-semibold mt-8"
+            >
+              {auth.loading ? (
+                <div className="flex items-center gap-2">
+                  <Icon icon="line-md:loading-twotone-loop" width={20} />
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                'Sign In'
+              )}
+            </Button>
+          </form>
+
+          {/* Register Link */}
+          <div className="mt-8 text-center border-t border-border pt-6">
+            <p className="text-sm text-muted">
+              Don't have an account?{' '}
+              <Link to="/register" className="text-primary font-semibold hover:underline">
+                Register here
+              </Link>
+            </p>
           </div>
         </div>
       </div>
