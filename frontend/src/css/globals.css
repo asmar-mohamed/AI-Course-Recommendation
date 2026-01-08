@@ -9,6 +9,11 @@
 @import './override/reboot.css' layer(utilities);
 @import "tw-animate-css";
 
+/* Roboto Font - Coursera style */
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 
 @custom-variant dark (&:is(.dark *));
 

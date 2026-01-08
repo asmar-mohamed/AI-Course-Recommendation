@@ -81,7 +81,7 @@ export default function TestPage() {
                 <Card className="rounded-[3rem] p-12 shadow-2xl border-none bg-white dark:bg-slate-900 overflow-hidden relative">
                     <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
 
-                    <div className={`w-24 h-24 rounded-[2rem] mx-auto flex items-center justify-center mb-8 shadow-lg ${result.passed ? 'bg-success/20 text-success' : 'bg-error/20 text-error'}`}>
+                    <div className={`w-24 h-24 rounded-[1rem] mx-auto flex items-center justify-center mb-8 shadow-lg ${result.passed ? 'bg-success/20 text-success' : 'bg-error/20 text-error'}`}>
                         <Icon icon={result.passed ? "solar:verified-check-bold-duotone" : "solar:danger-bold-duotone"} width={64} />
                     </div>
 
@@ -150,7 +150,7 @@ export default function TestPage() {
 
             <div className="space-y-6">
                 {test.questions.map((q, idx) => (
-                    <Card key={q.id} className="rounded-[2.5rem] border-slate-200 dark:border-slate-800 shadow-sm p-8 hover:shadow-md transition-shadow">
+                    <Card key={q.id} className="rounded-[1rem] border-slate-200 dark:border-slate-800 shadow-sm p-8 hover:shadow-md transition-shadow">
                         <div className="flex gap-6">
                             <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 text-slate-400 font-black">
                                 {idx + 1}

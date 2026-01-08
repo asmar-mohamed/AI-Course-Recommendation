@@ -37,10 +37,10 @@ export default function Register() {
 
           <div className="relative space-y-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-lightprimary rounded-[2rem] flex items-center justify-center text-primary mx-auto mb-6 shadow-inner">
+              <div className="w-20 h-20 bg-lightprimary rounded-[1rem] flex items-center justify-center text-primary mx-auto mb-6 shadow-inner">
                 <Icon icon="solar:user-plus-bold-duotone" width={48} />
               </div>
-              <h1 className="text-4xl font-black tracking-tight mb-2">Create <span className="text-primary italic">Account</span></h1>
+              <h1 className="text-4xl font-black tracking-tight mb-2">Create <span className="text-primary">Account</span></h1>
               <p className="text-slate-400 font-bold text-sm uppercase tracking-widest leading-relaxed">Join our community of lifelong learners</p>
             </div>
 

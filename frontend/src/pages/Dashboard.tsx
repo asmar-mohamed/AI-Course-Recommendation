@@ -51,12 +51,16 @@ export default function Dashboard() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-8">
       {/* Profile Section */}
-      <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-8 shadow-sm">
+      <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[1rem] p-8 shadow-sm">
         <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-2xl bg-lightprimary flex items-center justify-center text-primary">
-              <Icon icon="solar:user-bold-duotone" width={48} />
+              <img
+                src="https://avatars.githubusercontent.com/u/124599?v=4"
+                alt="Profile"
+                className="rounded-2xl "
+              />
             </div>
             <div>
               <h2 className="text-3xl font-bold tracking-tight">{user?.name}</h2>
@@ -93,7 +97,7 @@ export default function Dashboard() {
           </div>
 
           {enrollments.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[2rem] p-12 text-center">
+            <div className="bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-[1rem] p-12 text-center">
               <Icon icon="solar:folder-error-bold-duotone" width={64} className="mx-auto text-slate-300 mb-4" />
               <p className="text-slate-500 font-medium font-outfit">You haven't enrolled in any courses yet.</p>
             </div>
@@ -143,7 +147,7 @@ export default function Dashboard() {
             Skills Palette
           </h3>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-6 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[1rem] p-6 shadow-sm">
             {skills.length === 0 ? (
               <div className="text-center py-8">
                 <Icon icon="solar:test-tube-bold-duotone" width={48} className="mx-auto text-slate-200 mb-3" />

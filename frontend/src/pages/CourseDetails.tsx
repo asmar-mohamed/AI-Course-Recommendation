@@ -54,14 +54,14 @@ export default function CourseDetails() {
 
   if (courseLoading || checkingEnrollment) return <Loading />
   if (error) return (
-    <div className="flex flex-col items-center justify-center p-12 bg-lighterror/20 rounded-[2rem] border border-lighterror">
+    <div className="flex flex-col items-center justify-center p-12 bg-lighterror/20 rounded-[1rem] border border-lighterror">
       <Icon icon="solar:danger-bold-duotone" width={64} className="text-error mb-4" />
       <p className="text-error font-bold">Error loading course</p>
       <p className="text-slate-500 text-sm mt-1">{error}</p>
     </div>
   )
   if (!currentCourse) return (
-    <div className="text-center p-12 bg-slate-50 dark:bg-slate-900 rounded-[2rem]">
+    <div className="text-center p-12 bg-slate-50 dark:bg-slate-900 rounded-[1rem]">
       <Icon icon="solar:magnifer-outline" width={48} className="mx-auto text-slate-300 mb-4" />
       <p className="text-slate-500 font-bold">Course not found</p>
     </div>
@@ -94,7 +94,7 @@ export default function CourseDetails() {
         </div>
 
         <div className="relative pt-12 px-8 md:px-12 pb-12">
-          <div className="absolute -top-12 left-8 md:left-12 p-6 bg-white dark:bg-slate-800 rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-700">
+          <div className="absolute -top-12 left-8 md:left-12 p-6 bg-white dark:bg-slate-800 rounded-[1rem] shadow-xl border border-slate-100 dark:border-slate-700">
             <Icon icon="solar:programming-bold-duotone" width={48} className="text-primary" />
           </div>
 
@@ -153,7 +153,7 @@ export default function CourseDetails() {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800">
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-[1rem] border border-slate-100 dark:border-slate-800">
                 <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-4">Course Info</h4>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between text-sm">

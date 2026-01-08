@@ -17,7 +17,7 @@ export default function CoursesList() {
 
   if (loading) return <Loading />
   if (error) return (
-    <div className="flex flex-col items-center justify-center p-12 bg-lighterror/20 rounded-[2rem] border border-lighterror">
+    <div className="flex flex-col items-center justify-center p-12 bg-lighterror/20 rounded-[1rem] border border-lighterror">
       <Icon icon="solar:danger-bold-duotone" width={64} className="text-error mb-4" />
       <p className="text-error font-bold">Error loading courses</p>
       <p className="text-slate-500 text-sm mt-1">{typeof error === 'string' ? error : JSON.stringify(error)}</p>
@@ -29,14 +29,14 @@ export default function CoursesList() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-4xl font-extrabold tracking-tight">
-            Explore <span className="text-primary italic">Courses</span>
+            Explore <span className="text-primary">Courses</span>
           </h1>
           <p className="text-slate-500 mt-2 font-medium">Discover your next learning path and level up your skills.</p>
         </div>
       </div>
 
       {list.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-16 text-center shadow-sm">
+        <div className="bg-white dark:bg-slate-900 rounded-[1rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-16 text-center shadow-sm">
           <Icon icon="solar:folder-open-bold-duotone" width={80} className="mx-auto text-slate-200 mb-6" />
           <h3 className="text-xl font-bold mb-2">No courses available</h3>
           <p className="text-slate-500 max-w-xs mx-auto">We're currently curating new content. Please check back later!</p>
@@ -47,9 +47,9 @@ export default function CoursesList() {
             <Link
               key={course.id}
               to={`/courses/${course.id}`}
-              className="group bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-2 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col"
+              className="group bg-white dark:bg-slate-900 rounded-[1rem] border border-slate-200 dark:border-slate-800 p-2 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col"
             >
-              <div className="relative h-48 bg-lightprimary rounded-[2rem] overflow-hidden">
+              <div className="relative h-48 bg-lightprimary rounded-[1rem] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Icon icon="solar:notebook-bold-duotone" width={80} className="text-primary/30 group-hover:scale-110 transition-transform duration-500" />

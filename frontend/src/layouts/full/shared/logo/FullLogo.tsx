@@ -5,19 +5,19 @@ const FullLogo = () => {
         <Link to={"/"}>
             {/* Dark Logo */}
             <img
-                src="/matdash-nextjs/images/logos/dark-logo.svg"
+                src="./reco.png"
                 alt="logo"
                 width={135}
                 height={40}
-                className="block dark:hidden rtl:scale-x-[-1]"
+                className="block"
             />
             {/* Light Logo */}
             <img
-                src="/matdash-nextjs/images/logos/dark-logo.svg"
+                src="./reco.png"
                 alt="logo"
                 width={135}
                 height={40}
-                className="hidden dark:block rtl:scale-x-[-1]"
+                className="hidden"
             />
         </Link>
     );

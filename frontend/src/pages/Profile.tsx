@@ -123,11 +123,17 @@ export default function Profile() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left Column: Profile Info */}
                 <div className="space-y-8">
-                    <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+                    <div className="bg-white dark:bg-slate-900 rounded-[1rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
                         <div className="flex flex-col items-center text-center mb-8">
-                            <div className="w-24 h-24 rounded-[2rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner">
+                            {/* <div className="w-24 h-24 rounded-[1rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner">
                                 <Icon icon="solar:user-bold-duotone" width={56} />
                             </div>
+                             */}
+                             <img
+                            src="https://avatars.githubusercontent.com/u/124599?v=4"
+                            alt="Profile"
+                            className="w-24 h-24 rounded-[1rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner"
+                        />
                             <h2 className="text-2xl font-black dark:text-slate-100">{name}</h2>
                             <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1">{user.role || 'Student'}</p>
                         </div>
@@ -160,7 +166,7 @@ export default function Profile() {
 
                 {/* Right Column: Skills Management */}
                 <div className="lg:col-span-2 space-y-8">
-                    <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+                    <div className="bg-white dark:bg-slate-900 rounded-[1rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
                         <div className="flex items-center justify-between mb-8">
                             <h3 className="text-2xl font-black flex items-center gap-3 dark:text-slate-100">
                                 <Icon icon="solar:star-bold-duotone" className="text-warning" width={32} />
@@ -172,14 +178,14 @@ export default function Profile() {
                         </div>
 
                         {userSkills.length === 0 ? (
-                            <div className="text-center py-12 bg-slate-50 dark:bg-slate-800/50 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800">
+                            <div className="text-center py-12 bg-slate-50 dark:bg-slate-800/50 rounded-[1rem] border-2 border-dashed border-slate-200 dark:border-slate-800">
                                 <Icon icon="solar:magic-stick-bold-duotone" width={64} className="mx-auto text-slate-300 mb-4" />
                                 <p className="text-slate-400 font-bold">No skills added yet. Start by adding one below!</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {userSkills.map(us => (
-                                    <div key={us.id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] flex items-center justify-between group hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
+                                    <div key={us.id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[1rem] flex items-center justify-between group hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
                                         <div className="flex items-center gap-4">
                                             <div className="w-12 h-12 rounded-2xl bg-lightprimary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                                                 <Icon icon="solar:medal-star-bold-duotone" width={24} />

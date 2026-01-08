@@ -102,12 +102,11 @@ const SidebarLayout = ({ onClose }: { onClose?: () => void }) => {
             {/* Logo */}
             <div className='px-4 flex items-center brand-logo overflow-hidden'>
                 <AMLogo component={Link} href='/' img=''>
-                    <img
-                        src="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=for_you"
-                        alt="logo"
-                        width={135}
-                        height={40}
-                        className="rtl:scale-x-[-1]"
+                  <img
+                    src="./reco.png"
+                    alt="logo"
+                    width={300}
+                    height={100}
                     />
                 </AMLogo>
             </div>

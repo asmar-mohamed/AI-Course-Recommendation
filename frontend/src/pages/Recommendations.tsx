@@ -22,7 +22,7 @@ export default function Recommendations() {
         <div>
           <h1 className="text-4xl font-extrabold tracking-tight flex items-center gap-3">
             <Icon icon="solar:lightbulb-bolt-bold-duotone" className="text-primary" width={40} />
-            Smart <span className="text-primary italic">Recommendations</span>
+            Smart <span className="text-primary">Recommendations</span>
           </h1>
           <p className="text-slate-500 mt-2 font-medium">Courses curated just for you based on your skill palette.</p>
         </div>
@@ -39,7 +39,7 @@ export default function Recommendations() {
 
       <div className="space-y-6">
         {recState.items.length === 0 && !recState.loading && (
-          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-20 text-center shadow-sm">
+          <div className="bg-white dark:bg-slate-900 rounded-[1rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-20 text-center shadow-sm">
             <Icon icon="solar:case-minimalistic-bold-duotone" width={80} className="mx-auto text-slate-200 mb-6" />
             <h3 className="text-xl font-bold mb-2 text-slate-400 font-outfit">No recommendations yet</h3>
             <p className="text-slate-500 max-w-xs mx-auto mb-8 font-medium">Add more skills to your profile to get personalized course suggestions.</p>
@@ -50,7 +50,7 @@ export default function Recommendations() {
         )}
 
         {recState.items.map((r: Recommendation) => (
-          <div key={r.course_id} className="group relative bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col md:flex-row gap-8 items-center cursor-pointer">
+          <div key={r.course_id} className="group relative bg-white dark:bg-slate-900 rounded-[1rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col md:flex-row gap-8 items-center cursor-pointer">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors"></div>
 
             <div className="w-20 h-20 rounded-[1.5rem] bg-lightprimary flex-shrink-0 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
@@ -63,7 +63,7 @@ export default function Recommendations() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {r.matched_skills?.map((s) => (
-                  <span key={s.id} className="px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500">
+                  <span key={s.id} className="px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded rounded-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
                     {s.name}
                   </span>
                 ))}
@@ -78,7 +78,7 @@ export default function Recommendations() {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <Button variant="ghost" asChild className="rounded-xl group-hover:bg-primary group-hover:text-white transition-all">
+                <Button variant={'outline'} asChild className="rounded-xl group-hover:bg-primary group-hover:text-white transition-all">
                   <Link to={`/courses/${r.course_id}`}>
                     Explore <Icon icon="solar:arrow-right-linear" className="ml-2" />
                   </Link>
