@@ -61,6 +61,35 @@ const SidebarContent: MenuItem[] = [
     ],
   },
   {
+    heading: 'Admin',
+    children: [
+      {
+        name: 'Admin Dashboard',
+        icon: 'solar:settings-bold-duotone',
+        id: uniqueId(),
+        url: '/admin/dashboard',
+      },
+      {
+        name: 'Manage Courses',
+        icon: 'solar:library-bold-duotone',
+        id: uniqueId(),
+        url: '/admin/courses',
+      },
+      {
+        name: 'Manage Skills',
+        icon: 'solar:medal-star-bold-duotone',
+        id: uniqueId(),
+        url: '/admin/skills',
+      },
+      {
+        name: 'Manage Tests',
+        icon: 'solar:clipboard-list-bold-duotone',
+        id: uniqueId(),
+        url: '/admin/tests',
+      },
+    ],
+  },
+  {
     heading: 'User',
     children: [
       {
@@ -70,7 +99,7 @@ const SidebarContent: MenuItem[] = [
         url: '/profile',
       },
     ],
-  },
+  }
 ];
 
 export default SidebarContent;

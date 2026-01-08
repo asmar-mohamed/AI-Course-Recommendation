@@ -7,7 +7,7 @@ import * as userSkillService from '@/services/userSkillService'
 import * as testService from '@/services/testService'
 import { authMe } from '@/store/authSlice'
 import { useNavigate } from 'react-router-dom'
-import type { Skill, UserSkill } from '@/types'
+import type { Skill, UserSkill } from '@/types/types'
 import Loading from '@/components/Loading'
 import { Icon } from '@iconify/react'
 import { Button } from '@/components/ui/button'
@@ -34,7 +34,7 @@ export default function Profile() {
             setEmail(user.email)
 
             Promise.all([
-                skillService.getAllSkills(),
+                skillService.getAll(),
                 userSkillService.getUserSkills(user.id)
             ]).then(([all, us]) => {
                 setAllSkills(all)

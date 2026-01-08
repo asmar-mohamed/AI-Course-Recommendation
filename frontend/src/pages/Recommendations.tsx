@@ -6,7 +6,7 @@ import Loading from '@/components/Loading'
 import { Icon } from '@iconify/react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
-import type { Recommendation } from '@/types'
+import type { Recommendation } from '@/types/types'
 
 export default function Recommendations() {
   const dispatch = useDispatch()

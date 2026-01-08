@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { authMe } from '@/store/authSlice'
 import Login from './pages/Login'
@@ -11,8 +11,14 @@ import CourseDetails from './pages/CourseDetails'
 import Profile from './pages/Profile'
 import TestPage from './pages/TestPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 import ApiStatus from './components/ApiStatus'
 import FullLayout from './layouts/full/FullLayout'
+
+import AdminDashboard from './pages/AdminDashboard'
+import AdminCourses from './pages/AdminCourses'
+import AdminSkills from './pages/AdminSkills'
+import AdminTests from './pages/AdminTests'
 
 export default function App() {
   const dispatch = useDispatch()
@@ -45,6 +51,15 @@ export default function App() {
         <Route path="/test/:skillId" element={<ProtectedRoute><FullLayout><TestPage /></FullLayout></ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute><FullLayout><CoursesList /></FullLayout></ProtectedRoute>} />
         <Route path="/courses/:id" element={<ProtectedRoute><FullLayout><CourseDetails /></FullLayout></ProtectedRoute>} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminRoute><FullLayout><Outlet /></FullLayout></AdminRoute>}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="courses" element={<AdminCourses />} />
+          <Route path="skills" element={<AdminSkills />} />
+          <Route path="tests" element={<AdminTests />} />
+        </Route>
 
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />

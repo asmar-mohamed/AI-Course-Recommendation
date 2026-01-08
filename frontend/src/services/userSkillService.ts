@@ -1,5 +1,5 @@
 import axios from '@/api/axios'
-import type { UserSkill } from '@/types'
+import type { UserSkill } from '@/types/types'
 
 export async function getUserSkills(userId: number) {
   const { data } = await axios.get<UserSkill[]>(`/user-skills/user/${userId}`)

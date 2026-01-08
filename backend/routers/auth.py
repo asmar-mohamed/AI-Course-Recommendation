@@ -116,6 +116,14 @@ def get_current_user(authorization: str | None = Header(None), db: Session = Dep
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='User not found')
     return user
+    
+def get_admin_user(current_user: models.User = Depends(get_current_user)):
+    if current_user.role != 'admin':
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The user doesn't have enough privileges"
+        )
+    return current_user
 
 @router.get('/me', response_model=UserOut)
 def me(current_user: models.User = Depends(get_current_user)):

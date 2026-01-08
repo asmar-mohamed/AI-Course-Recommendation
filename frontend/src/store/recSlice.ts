@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as recService from '@/services/recommendationService'
-import type { Recommendation } from '@/types'
+import type { Recommendation } from '@/types/types'
 
 interface RecState {
   items: Recommendation[]
