@@ -11,6 +11,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True)
     password = Column(String(255))
     role = Column(String(50))
+    profile_picture = Column(String(500), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     skills = relationship("UserSkill", back_populates="user")
     enrollments = relationship("Enrollment", back_populates="user")

@@ -76,7 +76,7 @@ export default function CourseDetails() {
         </Link>
       </Button>
 {msg && (
-          <div className="my-8 flex items-center gap-3 p-4 bg-lightprimary text-primary rounded-2xl border border-primary/20 animate-in fade-in slide-in-from-top-4">
+          <div className="my-8 flex items-center gap-3 p-4 bg-lightprimary text-primary rounded-lg border border-primary/20 animate-in fade-in slide-in-from-top-4">
             <Icon icon="solar:info-circle-bold-duotone" width={24} />
             <span className="font-bold text-sm">{msg}</span>
             <button onClick={() => setMsg('')} className="ml-auto opacity-50 hover:opacity-100">

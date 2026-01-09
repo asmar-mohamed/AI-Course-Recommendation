@@ -78,7 +78,7 @@ export default function TestPage() {
     if (result) {
         return (
             <div className="max-w-3xl mx-auto py-12 px-4 text-center">
-                <Card className="rounded-[3rem] p-12 shadow-2xl border-none bg-white dark:bg-slate-900 overflow-hidden relative">
+                <Card className="rounded-lg p-12 shadow-2xl border-none bg-white dark:bg-slate-900 overflow-hidden relative">
                     <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
 
                     <div className={`w-24 h-24 rounded-[1rem] mx-auto flex items-center justify-center mb-8 shadow-lg ${result.passed ? 'bg-success/20 text-success' : 'bg-error/20 text-error'}`}>
@@ -106,7 +106,7 @@ export default function TestPage() {
                         </div>
                     </div>
 
-                    <Button onClick={() => navigate('/recommendations')} size="lg" className="rounded-2xl px-12 py-7 h-auto font-black shadow-xl shadow-primary/20 bg-success hover:bg-success/90">
+                    <Button onClick={() => navigate('/recommendations')} size="lg" className="rounded-lg px-12 py-7 h-auto font-black shadow-xl shadow-primary/20 bg-success hover:bg-success/90">
                         <Icon icon="solar:globus-bold-duotone" className="mr-2" width={24} />
                         View Recommendations
                     </Button>
@@ -137,7 +137,7 @@ export default function TestPage() {
                     <h1 className="text-4xl font-black tracking-tight">{test.title}</h1>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 px-6 py-4 rounded-3xl border border-slate-200 dark:border-slate-800 flex items-center gap-4 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 px-6 py-4 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center gap-4 shadow-sm">
                     <Icon icon="solar:clock-circle-bold-duotone" className={timeLeft < 60 ? 'text-error animate-pulse' : 'text-primary'} width={24} />
                     <div>
                         <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">Time Remaining</div>
@@ -152,7 +152,7 @@ export default function TestPage() {
                 {test.questions.map((q, idx) => (
                     <Card key={q.id} className="rounded-[1rem] border-slate-200 dark:border-slate-800 shadow-sm p-8 hover:shadow-md transition-shadow">
                         <div className="flex gap-6">
-                            <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 text-slate-400 font-black">
+                            <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center shrink-0 text-slate-400 font-black">
                                 {idx + 1}
                             </div>
                             <div className="flex-1 space-y-6">
@@ -162,7 +162,7 @@ export default function TestPage() {
                                         <button
                                             key={c.id}
                                             onClick={() => handleSelect(q.id, c.id)}
-                                            className={`p-5 rounded-2xl border-2 text-left transition-all font-bold flex items-center justify-between group
+                                            className={`p-5 rounded-lg border-2 text-left transition-all font-bold flex items-center justify-between group
                                                 ${answers[q.id] === c.id
                                                     ? 'border-primary bg-lightprimary/20 text-primary'
                                                     : 'border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700'
@@ -194,7 +194,7 @@ export default function TestPage() {
                     <Button
                         onClick={handleSubmit}
                         disabled={submitting || Object.keys(answers).length < test.questions.length}
-                        className="rounded-2xl px-12 py-6 h-auto font-black shadow-xl shadow-primary/20"
+                        className="rounded-lg px-12 py-6 h-auto font-black shadow-xl shadow-primary/20"
                     >
                         {submitting ? "Submitting..." : "Submit Test"}
                     </Button>

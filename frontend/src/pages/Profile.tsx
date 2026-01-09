@@ -22,11 +22,10 @@ export default function Profile() {
     const [email, setEmail] = useState('')
     const [userSkills, setUserSkills] = useState<UserSkill[]>([])
     const [allSkills, setAllSkills] = useState<Skill[]>([])
-
     const [newSkillId, setNewSkillId] = useState<number>(0)
-
     const [loading, setLoading] = useState(true)
     const [msg, setMsg] = useState('')
+    const [uploading, setUploading] = useState(false)
 
     useEffect(() => {
         if (user) {
@@ -53,6 +52,38 @@ export default function Profile() {
             setMsg('Profile updated successfully.')
         } catch (err) {
             setMsg('Failed to update profile.')
+        }
+    }
+
+    const handleProfilePictureChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file || !user) return
+
+        setUploading(true)
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+
+            const token = localStorage.getItem("token")
+            const response = await fetch(`http://localhost:8000/users/${user.id}/profile-picture`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+                body: formData
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to upload profile picture")
+            }
+
+            setMsg("Profile picture updated successfully!")
+            dispatch(authMe() as any)
+        } catch (error) {
+            console.error("Error uploading profile picture:", error)
+            setMsg("Failed to upload profile picture")
+        } finally {
+            setUploading(false)
         }
     }
 
@@ -111,7 +142,7 @@ export default function Profile() {
     return (
         <div className="max-w-7xl mx-auto space-y-8 pb-12">
             {msg && (
-                <div className="flex items-center gap-3 p-4 bg-lightprimary text-primary rounded-2xl border border-primary/20 animate-in fade-in slide-in-from-top-4">
+                <div className="flex items-center gap-3 p-4 bg-lightprimary text-primary rounded-lg border border-primary/20 animate-in fade-in slide-in-from-top-4">
                     <Icon icon="solar:check-circle-bold-duotone" width={24} />
                     <span className="font-bold text-sm">{msg}</span>
                     <button onClick={() => setMsg('')} className="ml-auto opacity-50 hover:opacity-100">
@@ -125,15 +156,33 @@ export default function Profile() {
                 <div className="space-y-8">
                     <div className="bg-white dark:bg-slate-900 rounded-[1rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
                         <div className="flex flex-col items-center text-center mb-8">
-                            {/* <div className="w-24 h-24 rounded-[1rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner">
-                                <Icon icon="solar:user-bold-duotone" width={56} />
+                            <div className="relative w-24 h-24 group mb-4">
+                                <img
+                                    src={user?.profile_picture || "https://avatars.githubusercontent.com/u/124599?v=4"}
+                                    alt="Profile"
+                                    className="w-full h-full rounded-[1rem] bg-lightprimary shadow-inner object-cover"
+                                />
+                                <button
+                                    onClick={() => document.getElementById('profileFileInput')?.click()}
+                                    disabled={uploading}
+                                    className="absolute inset-0 rounded-[1rem] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer disabled:opacity-50 hover:bg-black/50"
+                                    type="button"
+                                    title="Change profile picture"
+                                >
+                                    {uploading ? (
+                                        <Icon icon="line-md:loading-twotone-loop" width={32} className="text-white" />
+                                    ) : (
+                                        <Icon icon="solar:camera-bold-duotone" width={32} className="text-white" />
+                                    )}
+                                </button>
                             </div>
-                             */}
-                             <img
-                            src="https://avatars.githubusercontent.com/u/124599?v=4"
-                            alt="Profile"
-                            className="w-24 h-24 rounded-[1rem] bg-lightprimary flex items-center justify-center text-primary mb-4 shadow-inner"
-                        />
+                            <input
+                                id="profileFileInput"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleProfilePictureChange}
+                                className="hidden"
+                            />
                             <h2 className="text-2xl font-black dark:text-slate-100">{name}</h2>
                             <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1">{user.role || 'Student'}</p>
                         </div>
@@ -142,7 +191,7 @@ export default function Profile() {
                             <div className="space-y-2">
                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Full Name</label>
                                 <Input
-                                    className="rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-12 px-4 font-bold focus:ring-primary/20 text-slate-900 dark:text-slate-100"
+                                    className="rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-12 px-4 font-bold focus:ring-primary/20 text-slate-900 dark:text-slate-100"
                                     value={name}
                                     onChange={e => setName(e.target.value)}
                                     placeholder="Enter your name"
@@ -151,12 +200,12 @@ export default function Profile() {
                             <div className="space-y-2">
                                 <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</label>
                                 <Input
-                                    className="rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 h-12 px-4 font-bold cursor-not-allowed text-slate-400"
+                                    className="rounded-lg border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 h-12 px-4 font-bold cursor-not-allowed text-slate-400"
                                     value={email}
                                     disabled
                                 />
                             </div>
-                            <Button type="submit" className="w-full rounded-2xl h-14 font-black shadow-lg shadow-primary/20">
+                            <Button type="submit" className="w-full rounded-lg h-14 font-black shadow-lg shadow-primary/20">
                                 <Icon icon="solar:diskette-bold-duotone" className="mr-2" width={20} />
                                 Save Updates
                             </Button>
@@ -187,7 +236,7 @@ export default function Profile() {
                                 {userSkills.map(us => (
                                     <div key={us.id} className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[1rem] flex items-center justify-between group hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/5">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-lightprimary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                                            <div className="w-12 h-12 rounded-lg bg-lightprimary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                                                 <Icon icon="solar:medal-star-bold-duotone" width={24} />
                                             </div>
                                             <div>
@@ -230,14 +279,14 @@ export default function Profile() {
                                 <div className="flex-1 min-w-[200px] space-y-2">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Select Skill</label>
                                     <select
-                                        className="w-full rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 h-12 px-4 font-bold outline-none focus:ring-2 ring-primary/20 appearance-none text-slate-900 dark:text-slate-100"
+                                        className="w-full rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 h-12 px-4 font-bold outline-none focus:ring-2 ring-primary/20 appearance-none text-slate-900 dark:text-slate-100"
                                         value={newSkillId}
                                         onChange={e => setNewSkillId(Number(e.target.value))}
                                     >
                                         {allSkills.map(s => <option key={s.id} value={s.id} className="dark:bg-slate-900 dark:text-slate-100">{s.name}</option>)}
                                     </select>
                                 </div>
-                                <Button type="submit" className="h-12 px-12 rounded-2xl font-black bg-success hover:bg-success/90">
+                                <Button type="submit" className="h-12 px-12 rounded-lg font-black bg-success hover:bg-success/90">
                                     <Icon icon="solar:add-circle-bold-duotone" className="mr-2" width={20} />
                                     Add Skill
                                 </Button>

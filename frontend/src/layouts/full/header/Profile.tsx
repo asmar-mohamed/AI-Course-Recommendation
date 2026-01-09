@@ -7,9 +7,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
 
 const Profile = () => {
     const navigate = useNavigate();
+    const user = useSelector((state: RootState) => state.auth.user);
 
     const handleLogout = () => {
         // Basic logout logic
@@ -17,19 +20,21 @@ const Profile = () => {
         navigate("/login");
     };
 
+    const profileImageUrl = user?.profile_picture || "https://avatars.githubusercontent.com/u/124599?v=4";
+
     return (
         <div className="relative group/menu">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <span className="h-10 w-10 hover:text-primary hover:bg-lightprimary rounded-full flex justify-center items-center cursor-pointer group-hover/menu:bg-lightprimary group-hover/menu:text-primary">
+                    <button className="h-12 w-12 hover:bg-lightprimary rounded-lg flex justify-center items-center cursor-pointer group-hover/menu:bg-lightprimary group-hover/menu:text-primary border-0 p-0 bg-transparent">
                         <img
-                            src="https://avatars.githubusercontent.com/u/124599?v=4"
+                            src={profileImageUrl}
                             alt="Profile"
-                            height={35}
-                            width={35}
-                            className="rounded-full"
+                            height={48}
+                            width={48}
+                            className="rounded-lg object-cover"
                         />
-                    </span>
+                    </button>
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent

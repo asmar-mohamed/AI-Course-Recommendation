@@ -55,11 +55,11 @@ export default function Dashboard() {
         <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <div className="w-20 h-20 rounded-2xl bg-lightprimary flex items-center justify-center text-primary">
+            <div className="w-20 h-20 rounded-lg bg-lightprimary flex items-center justify-center text-primary">
               <img
                 src="https://avatars.githubusercontent.com/u/124599?v=4"
                 alt="Profile"
-                className="rounded-2xl "
+                className="rounded-lg "
               />
             </div>
             <div>
@@ -71,7 +71,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="flex gap-4">
-            <Button asChild className="rounded-2xl px-6 py-6 h-auto text-base font-semibold shadow-lg shadow-primary/20">
+            <Button asChild className="rounded-lg px-6 py-6 h-auto text-base font-semibold shadow-lg shadow-primary/20">
               <Link to="/recommendations">
                 <Icon icon="solar:lightbulb-bolt-bold-duotone" width={24} className="mr-2" />
                 Get Recommendations
@@ -107,7 +107,7 @@ export default function Dashboard() {
                 <div
                   key={enr.id}
                   onClick={() => navigate(`/courses/${enr.course_id}`)}
-                  className="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl hover:border-primary/50 transition-all hover:shadow-md cursor-pointer"
+                  className="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-lg hover:border-primary/50 transition-all hover:shadow-md cursor-pointer"
                 >
                   <button
                     onClick={(e) => handleDeleteEnrollment(e, enr.id)}

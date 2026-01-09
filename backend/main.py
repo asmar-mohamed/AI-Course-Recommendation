@@ -1,6 +1,8 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from database import engine
 import models
+import os
 
 from routers import (
     user,
@@ -27,6 +29,12 @@ origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+
+# Create uploads directory if it doesn't exist
+os.makedirs("uploads", exist_ok=True)
+
+# Mount static files for uploads
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,

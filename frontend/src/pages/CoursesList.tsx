@@ -88,7 +88,7 @@ export default function CoursesList() {
                       <span className="text-[11px] font-bold">12h Content</span>
                     </div>
                   </div>
-                  <div className="w-10 h-10 bg-lightprimary rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                  <div className="w-10 h-10 bg-lightprimary rounded-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
                     <Icon icon="solar:arrow-right-up-linear" width={20} strokeWidth={2.5} />
                   </div>
                 </div>

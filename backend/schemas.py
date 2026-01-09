@@ -13,6 +13,7 @@ class UserUpdate(BaseModel):
     email: str | None = None
     password: str | None = None
     role: str | None = None
+    profile_picture: str | None = None
 
 class UserResponse(UserCreate):
     id: int
@@ -36,6 +37,7 @@ class UserOut(BaseModel):
     name: str
     email: str
     role: str
+    profile_picture: str | None = None
     created_at: datetime
 
     class Config:

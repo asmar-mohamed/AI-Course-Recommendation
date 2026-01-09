@@ -31,7 +31,7 @@ export default function Recommendations() {
       {recState.loading && <Loading />}
 
       {recState.error && (
-        <div className="flex items-center gap-3 p-4 bg-lighterror/20 text-error rounded-2xl border border-error/20">
+        <div className="flex items-center gap-3 p-4 bg-lighterror/20 text-error rounded-lg border border-error/20">
           <Icon icon="solar:danger-bold-duotone" width={24} />
           <span className="font-bold text-sm">{recState.error}</span>
         </div>
@@ -43,7 +43,7 @@ export default function Recommendations() {
             <Icon icon="solar:case-minimalistic-bold-duotone" width={80} className="mx-auto text-slate-200 mb-6" />
             <h3 className="text-xl font-bold mb-2 text-slate-400 font-outfit">No recommendations yet</h3>
             <p className="text-slate-500 max-w-xs mx-auto mb-8 font-medium">Add more skills to your profile to get personalized course suggestions.</p>
-            <Button asChild className="rounded-2xl px-8 py-6 h-auto font-black shadow-lg shadow-primary/20">
+            <Button asChild className="rounded-lg px-8 py-6 h-auto font-black shadow-lg shadow-primary/20">
               <Link to="/profile">Update Profile Skills</Link>
             </Button>
           </div>

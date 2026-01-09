@@ -4,6 +4,7 @@ export interface User {
   email: string
   name?: string
   role?: string
+  profile_picture?: string
 }
 
 export interface Skill {
